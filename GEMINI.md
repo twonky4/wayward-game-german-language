@@ -19,14 +19,36 @@ Der Mod nutzt das integrierte Lokalisierungssystem von Wayward:
 ## Interpolation & Platzhalter
 Die Übersetzung nutzt ein mächtiges Interpolationssystem für dynamische Texte:
 - **Argumente:** Zugriff über Index `{0}` oder Eigenschaftsnamen `{item.name}`.
-- **Bedingungen:** Logische Abfragen wie `{likesVeggies?mag:hasst}` für variantenreiche Texte.
+- **Bedingungen:** Logische Abfragen wie `{1?Text wenn wahr:Text wenn falsch}` für variantenreiche Texte.
 - **Formatierung:** Unterstützung für Farben (`{#f00:text}`), Fettdruck, Kursivschrift und Listen.
 - **Noun Reformatting:** Automatische Anpassung von Substantiven (wichtig für Fälle und Geschlechter im Deutschen).
+- **Großschreibung:** Mit dem `^`-Operator (z. B. `{^Wort}`) kann die Großschreibung eines dynamisch generierten Wortes erzwungen werden.
+
+## Pluralisierung & Grammatik-Engine
+Wayward verfügt über eine integrierte Grammatik-Engine, die zur Laufzeit korrekte Pluralformen generiert.
+
+### Die `PLURAL`-Funktion
+Die bevorzugte Syntax für Pluralformen ist die **automatische Pluralisierung**:
+- **Syntax:** `{PLURAL({Variable}):Singularform}`
+- **Beispiel:** `{PLURAL({0}):Spielstand}` wird bei `{0} = 1` zu "Spielstand" und bei `{0} = 2` zu "Spielstände".
+- **Vorteil:** Diese Form ist stabiler bei verschachtelten Tags (z. B. innerhalb von Farben oder Bedingungen).
+
+### Manuelle Auswahl (Vermeiden)
+Die Syntax `{PLURAL({0})Singular:Plural}` ist zwar möglich, führt aber oft zu Fehlern in komplexen Zeichenketten (z. B. `ist:sinde`), da das System den gesamten Auswahl-String als ein Wort behandeln und fälschlicherweise erneut pluralisieren kann.
+
+### Steuerung über Regeln
+Die Engine nutzt drei Arten von Regeln in der `germanLanguage.json`:
+1.  **`pluralRules`:** Reguläre Ausdrücke für Standard-Endungen (z. B. `-ung` -> `-ungen`, `-e` -> `-en`).
+2.  **`irregularRules`:** Explizite Wortpaare für Ausnahmen (z. B. `ist` -> `sind`, `spielstand` -> `Spielstände`).
+    - **Wichtig:** Die Singular-Form (erstes Element) muss in **Kleinschreibung** angegeben werden, damit die Engine sie erkennt. Die Plural-Form (zweites Element) sollte die korrekte Groß-/Kleinschreibung für die Anzeige haben.
+3.  **`uncountables`:** Wörter, die niemals pluralisiert werden (z. B. `Geld`, `Asche`).
 
 ## Wichtige Richtlinien für die Übersetzung
 Um die technische Integrität und grammatikalische Korrektheit zu gewährleisten, müssen folgende Regeln strikt befolgt werden:
 
-1.  **Variablen & Platzhalter:** 
+1.  **Terminologie:**
+    - Der Begriff **"aberrant"** (aus dem Englischen) wird im Deutschen einheitlich mit **"abnormal"** übersetzt, da dies für Spieler verständlicher ist.
+2.  **Variablen & Platzhalter:** 
     - Die Namen von Variablen (z. B. `{TARGET}`, `{TOOL}`, `{ITEM}`, `{0}`) dürfen **niemals** übersetzt werden.
     - Fallback-Texte innerhalb von Platzhaltern (z. B. das "Doodad" in `{0??Doodad}`) **müssen** übersetzt werden (z. B. `{0??Objekt}`).
 2.  **Technische Referenzen:**
