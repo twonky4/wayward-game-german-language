@@ -1,7 +1,7 @@
 {
 	"name": "German Translation",
 	"description": "Eine umfassende deutsche Übersetzung für Wayward, die Menüs, Items, Kreaturen und Mechaniken lokalisiert.",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"author": "Alexander Kose",
 	"github": "https://github.com/twonky4/wayward-game-german-language",
 	"languages": [

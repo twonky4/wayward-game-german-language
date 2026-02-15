@@ -25,7 +25,13 @@ Die Übersetzung nutzt ein mächtiges Interpolationssystem für dynamische Texte
 - **Großschreibung:** Mit dem `^`-Operator (z. B. `{^Wort}`) kann die Großschreibung eines dynamisch generierten Wortes erzwungen werden.
 
 ## Pluralisierung & Grammatik-Engine
-Wayward verfügt über eine integrierte Grammatik-Engine, die zur Laufzeit korrekte Pluralformen generiert.
+Wayward verfügt über eine integrierte Grammatik-Engine, die zur Laufzeit korrekte Formen generiert.
+
+### Genus & Artikel
+Die Erkennung des Genus (männlich, weiblich, sächlich) für die korrekte Artikelwahl (**der/die/das**, **ein/eine**) erfolgt zentral über die `articleRules` in der `germanLanguage.json`.
+- **Wichtig:** Verwende **keine** Tags wie `{m}`, `{f}` oder `{n}` mehr direkt in den Übersetzungs-Strings. Diese wurden entfernt, da sie nicht zuverlässig vom Spiel überall ausgefiltert werden.
+- Neue Wörter müssen stattdessen in die entsprechenden Regex-Listen der `articleRules` aufgenommen werden.
+- Die Regeln unterstützen Präfixe wie "Abnormaler", "Toter" etc., um auch für modifizierte Gegenstände den korrekten Artikel zu finden.
 
 ### Die `PLURAL`-Funktion
 Die bevorzugte Syntax für Pluralformen ist die **automatische Pluralisierung**:
