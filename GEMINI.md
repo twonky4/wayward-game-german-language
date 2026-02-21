@@ -7,7 +7,7 @@ Dieses Projekt ist ein Übersetzung-Mod für das Spiel **Wayward**, der die Spie
 - **Basis:** Englische Sprachdatei der Version **2.15.2-beta**
 - **Autor:** Alexander Kose (twonky4)
 - **Repository:** [GitHub](https://github.com/twonky4/wayward-game-german-language)
-- **Veröffentlichung:** Geplant für den Steam Workshop (publishedFileId: TODO)
+- **Veröffentlichung:** Geplant für den Steam Workshop (publishedFileId: 3666160046)
 
 ## Technische Details
 Der Mod nutzt das integrierte Lokalisierungssystem von Wayward:
@@ -22,14 +22,12 @@ Die Übersetzung nutzt ein mächtiges Interpolationssystem für dynamische Texte
 - **Bedingungen:** Logische Abfragen wie `{1?Text wenn wahr:Text wenn falsch}` für variantenreiche Texte.
 - **Formatierung:** Unterstützung für Farben (`{#f00:text}`), Fettdruck, Kursivschrift und Listen.
 - **Noun Reformatting:** Automatische Anpassung von Substantiven (wichtig für Fälle und Geschlechter im Deutschen).
-- **Großschreibung:** Mit dem `^`-Operator (z. B. `{^Wort}`) kann die Großschreibung eines dynamisch generierten Wortes erzwungen werden.
 
 ## Pluralisierung & Grammatik-Engine
 Wayward verfügt über eine integrierte Grammatik-Engine, die zur Laufzeit korrekte Formen generiert.
 
 ### Genus & Artikel
 Die Erkennung des Genus (männlich, weiblich, sächlich) für die korrekte Artikelwahl (**der/die/das**, **ein/eine**) erfolgt zentral über die `articleRules` in der `germanLanguage.json`.
-- **Wichtig:** Verwende **keine** Tags wie `{m}`, `{f}` oder `{n}` mehr direkt in den Übersetzungs-Strings. Diese wurden entfernt, da sie nicht zuverlässig vom Spiel überall ausgefiltert werden.
 - Neue Wörter müssen stattdessen in die entsprechenden Regex-Listen der `articleRules` aufgenommen werden.
 - Die Regeln unterstützen Präfixe wie "Abnormaler", "Toter" etc., um auch für modifizierte Gegenstände den korrekten Artikel zu finden.
 
@@ -38,16 +36,6 @@ Die bevorzugte Syntax für Pluralformen ist die **automatische Pluralisierung**:
 - **Syntax:** `{PLURAL({Variable}):Singularform}`
 - **Beispiel:** `{PLURAL({0}):Spielstand}` wird bei `{0} = 1` zu "Spielstand" und bei `{0} = 2` zu "Spielstände".
 - **Vorteil:** Diese Form ist stabiler bei verschachtelten Tags (z. B. innerhalb von Farben oder Bedingungen).
-
-### Manuelle Auswahl (Vermeiden)
-Die Syntax `{PLURAL({0})Singular:Plural}` ist zwar möglich, führt aber oft zu Fehlern in komplexen Zeichenketten (z. B. `ist:sinde`), da das System den gesamten Auswahl-String als ein Wort behandeln und fälschlicherweise erneut pluralisieren kann.
-
-### Steuerung über Regeln
-Die Engine nutzt drei Arten von Regeln in der `germanLanguage.json`:
-1.  **`pluralRules`:** Reguläre Ausdrücke für Standard-Endungen (z. B. `-ung` -> `-ungen`, `-e` -> `-en`).
-2.  **`irregularRules`:** Explizite Wortpaare für Ausnahmen (z. B. `ist` -> `sind`, `spielstand` -> `Spielstände`).
-    - **Wichtig:** Die Singular-Form (erstes Element) muss in **Kleinschreibung** angegeben werden, damit die Engine sie erkennt. Die Plural-Form (zweites Element) sollte die korrekte Groß-/Kleinschreibung für die Anzeige haben.
-3.  **`uncountables`:** Wörter, die niemals pluralisiert werden (z. B. `Geld`, `Asche`).
 
 ## Wichtige Richtlinien für die Übersetzung
 Um die technische Integrität und grammatikalische Korrektheit zu gewährleisten, müssen folgende Regeln strikt befolgt werden:
